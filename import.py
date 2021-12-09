@@ -10,7 +10,7 @@ sqs = boto3.client('sqs')
 def lambda_handler(event, context):
 
     id = "import-1" #event.id
-    queue_url='https://sqs.us-east-1.amazonaws.com/452953247977/ContactHub.fifo' #event.url
+    queue_url='' #event.url
     
     try:
         # get file_url from dynamodb 
