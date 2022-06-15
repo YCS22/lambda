@@ -14,10 +14,7 @@ async function delete_message(conversation_id) {
   const getdeletedat = ` 
   query MyQuery($conversation_id:uuid) {
             conversation_user(where: {conversation_id: {_eq: $conversation_id}}) {
-            deleted_at
-            }  
-          }
-          `;
+            deleted_at}}`;
 
   const deleted_date = await fetch(url, {
     method: "POST",
@@ -48,14 +45,11 @@ async function delete_message(conversation_id) {
   };
  
   const deletemessage = ` 
-mutation MyMutation($date: timestamptz, $conversation_id: uuid) {
+  mutation MyMutation($date: timestamptz, $conversation_id: uuid) {
   delete_conversation_messages(where: {created_at: {_lte: $date}, conversation_id: {_eq: $conversation_id}}) {
     affected_rows
   }
-}
-
-          `;
-
+  }`;
   await fetch(url, {
     method: "POST",
     body: JSON.stringify({
@@ -72,7 +66,6 @@ mutation MyMutation($date: timestamptz, $conversation_id: uuid) {
       console.log("data",data)
       return data;
     });
-
   return false;
 }
 
@@ -84,9 +77,7 @@ async function get_deleted_at(conversation_id) {
   query MyQuery($conversation_id:uuid) {
             conversation_user(where: {conversation_id: {_eq: $conversation_id}}) {
             deleted_at
-            }  
-          }
-          `;
+            }}`;
 
   const deleted_date = await fetch(url, {
     method: "POST",
@@ -103,9 +94,7 @@ async function get_deleted_at(conversation_id) {
     .then(({ data }) => {
       return data.conversation_user;
     });
-
   let status;
-
   if (
     deleted_date[0].deleted_at != null &&
     deleted_date[1].deleted_at != null
@@ -114,7 +103,6 @@ async function get_deleted_at(conversation_id) {
   } else {
     status = getdeleteEnum.isNull;
   }
-
   return status;
 }
 
